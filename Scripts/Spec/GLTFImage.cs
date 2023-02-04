@@ -37,11 +37,14 @@ namespace Siccity.GLTFUtility {
 				if (!string.IsNullOrEmpty(path)) {
 #if UNITY_EDITOR
 					// Load textures from asset database if we can
-					Texture2D assetTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
-					if (assetTexture != null) {
-						onFinish(assetTexture);
-						if (onProgress != null) onProgress(1f);
-						yield break;
+					var projectPath = Application.dataPath;
+					if (path.StartsWith(projectPath)) {
+						Texture2D assetTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
+						if (assetTexture != null) {
+							onFinish(assetTexture);
+							if (onProgress != null) onProgress(1f);
+							yield break;
+						}
 					}
 #endif
 					// Prefer LoadImage due to errors with UnityWebRequestTexture on 2021
