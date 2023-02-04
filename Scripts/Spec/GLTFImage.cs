@@ -44,6 +44,15 @@ namespace Siccity.GLTFUtility {
 						yield break;
 					}
 #endif
+					// Prefer LoadImage due to errors with UnityWebRequestTexture on 2021
+					if (File.Exists(path))
+					{
+						var tex = new Texture2D(2, 2, TextureFormat.ARGB32, true, linear);
+						tex.LoadImage(File.ReadAllBytes(path));
+						onFinish(tex);
+						if (onProgress != null) onProgress(1f);
+						yield break;
+					}
 
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS )
 					path = "File://" + path;
