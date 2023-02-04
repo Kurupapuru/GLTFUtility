@@ -45,8 +45,7 @@ namespace Siccity.GLTFUtility {
 					}
 #endif
 					// Prefer LoadImage due to errors with UnityWebRequestTexture on 2021
-					if (File.Exists(path))
-					{
+					if (File.Exists(path)) {
 						var tex = new Texture2D(2, 2, TextureFormat.ARGB32, true, linear);
 						tex.LoadImage(File.ReadAllBytes(path));
 						onFinish(tex);
